@@ -65,7 +65,9 @@ public class ManagerServiceImpl implements ManagerService {
 		return managerList;
 	}
 	
-	
+	public Manager getManagerById(int id) {
+		return managerRepo.findById(id);
+	}
 	
 
 	@Override

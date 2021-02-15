@@ -15,4 +15,5 @@ public interface SwotRepository extends JpaRepository<Swot, Integer> {
 //	@Query(value = "select * from swot_analysis where associate =?1", nativeQuery = true)
 	@Query(value = "select * from swot_analysis where associate_id =?1", nativeQuery = true)
 	List<Swot> findAllByAssociateId(int associateId);
+	Swot findById(int swotId);
 }

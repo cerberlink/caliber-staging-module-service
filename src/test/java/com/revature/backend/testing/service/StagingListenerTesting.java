@@ -14,7 +14,6 @@ import com.revature.backend.model.api.ApiBatchTemplate;
 import com.revature.backend.util.StagingListenerImpl;
 
 @SpringBootTest()
-@RunWith(SpringRunner.class)
 public class StagingListenerTesting {
 
 	@Autowired

@@ -9,30 +9,29 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.backend.model.Associate;
 import com.revature.backend.model.Batch;
 import com.revature.backend.service.AssociateService;
 import com.revature.backend.service.BatchService;
-import com.revature.backend.util.BatchWriter;
+import com.revature.backend.util.BatchWriterImpl;
 
 //@SpringBootTest(classes={BatchWriter.class, BatchWriterImpl.class, AssociateServiceImpl.class, AssociateRepository.class, BatchService.class, BatchServiceImpl.class, BatchRepository.class})
 @SpringBootTest()
-@RunWith(SpringRunner.class)
 public class BatchWriterTesting {
 
-    @MockBean
+    @Mock
     AssociateService mockAssociateService;
 
-    @MockBean
+    @Mock
     BatchService mockBatchService;
 
-    @Autowired
-	BatchWriter batchWriter;
+    @InjectMocks
+	BatchWriterImpl batchWriter;
 	
 	@Test
 	void testWriteNewlyStagingAssociates() {

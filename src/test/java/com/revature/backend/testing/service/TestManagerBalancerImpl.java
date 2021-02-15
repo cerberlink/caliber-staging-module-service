@@ -17,19 +17,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.InjectMocks;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.revature.backend.model.Associate;
 import com.revature.backend.model.Batch;
 import com.revature.backend.model.Manager;
 import com.revature.backend.service.ManagerBalancerImpl;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
-@SpringBootTest(classes = { ManagerBalancerImpl.class })
-@RunWith(SpringRunner.class)
+@SpringBootTest()
 public class TestManagerBalancerImpl {
 
     // ----------
@@ -38,9 +36,15 @@ public class TestManagerBalancerImpl {
 
     // This is wiring an Impl because I want to test some of the helper methods which are
     // defined in the Impl, but are not specified in the interface
-    @Autowired
+	
+	
+	@InjectMocks
     private ManagerBalancerImpl managerBalancerImpl;
-
+    @BeforeEach    
+    public void setUp()
+    {
+    	
+    }
     // ----------
     // TESTS
     // ----------

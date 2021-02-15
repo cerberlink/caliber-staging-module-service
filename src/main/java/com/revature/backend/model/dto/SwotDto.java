@@ -18,15 +18,19 @@ public class SwotDto {
 	// Timestamp for most recent modification of SWOT.
 	private Timestamp lastModified;
 	
+	//Description of the SWOT
+	private String description;
+	
 	public SwotDto() {}
 
-	public SwotDto(int id, int associateId, int managerId, Timestamp createdOn, Timestamp lastModified) {
+	public SwotDto(int id, int associateId, int managerId, Timestamp createdOn, Timestamp lastModified, String description) {
 		super();
 		this.id = id;
 		this.associateId = associateId;
 		this.managerId = managerId;
 		this.createdOn = createdOn;
 		this.lastModified = lastModified;
+		this.description = description;
 	}
 
 	public int getId() {
@@ -68,11 +72,19 @@ public class SwotDto {
 	public void setLastModified(Timestamp lastModified) {
 		this.lastModified = lastModified;
 	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	@Override
 	public String toString() {
 		return "SwotDto [id=" + id + ", associateId=" + associateId + ", managerId=" + managerId + ", createdOn="
-				+ createdOn + ", lastModified=" + lastModified + "]";
+				+ createdOn + ", lastModified=" + lastModified + ", description=" + description + "]";
 	}
 	
 }

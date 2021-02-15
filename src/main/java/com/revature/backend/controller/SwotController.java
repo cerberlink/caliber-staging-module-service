@@ -28,115 +28,130 @@ import com.revature.backend.util.ClientMessage;
 
 @RestController("swotController")
 @RequestMapping("/swot")
-@CrossOrigin("*")
-//@CrossOrigin(origins = "http://ec2-54-237-27-253.compute-1.amazonaws.com")
 public class SwotController {
 
 	@Autowired
 	private SwotService swotService;
-	
-	/*
-	 * POST request to create a new SWOT for an Associate
-	 * with AnalysisItems within it as a collection.
+
+	/**
 	 * 
-	 * Takes in a Swot as a nested JSON object: the AnalysisItems
-	 * will be found within a JSON array.
+	 * @param swot
+	 * @return a 201 HTTP status with a message indicating whether or not creation was successful
 	 * 
-	 * Returns a 201 status with a message for the client
-	 * within the HTTP body as a JSON object if successful.
+	 * POST request to create a new SWOT for an Associate with AnalysisItems within
+	 * it as a collection.
 	 * 
-	 * *COMPLETED*
+	 * Takes in a Swot as a nested JSON object: the AnalysisItems will be found
+	 * within a JSON array.
+	 * 
+	 * Returns a 201 status with a message for the client within the HTTP body as a
+	 * JSON object if successful.
 	 */
-	@PostMapping(path="/create", consumes= {MediaType.APPLICATION_JSON_VALUE})
+	@PostMapping(path = "/create", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ClientMessage> createSwot(@RequestBody Swot swot) {
 		ClientMessage body = swotService.createNewSwot(swot) ? SUCCESSFULLY_CREATED : CREATION_FAILED;
+		System.out.println(swot);
 		return ResponseEntity.status(HttpStatus.CREATED).body(body);
 	}
-	
-	/*
-	 * GET request for fetching all SWOTs based on an 
-	 * Associate's id as found in the RESTful URL.
+
+	/**
 	 * 
-	 * Returns the List of SWOTs as a JSON array with
-	 * a 200 code if successful.
+	 * @param associateId
+	 * @return a list of all SWOTs for the corresponding associate
 	 * 
-	 * *COMPLETED*
+	 * GET request for fetching all SWOTs based on an Associate's id as found in the
+	 * RESTful URL.
+	 * 
+	 * Returns the List of SWOTs as a JSON array with a 200 code if successful.
 	 */
-	@GetMapping(path="/view/{associateId}", produces= {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(path = "/view/{associateId}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<List<Swot>> viewSwot(@PathVariable("associateId") int associateId) {
 		List<Swot> swotList = swotService.retrieveAllSwotByAssociateId(associateId);
 		return ResponseEntity.ok(swotList);
 	}
-	
-	/*
-	 * GET request for fetching all existing SWOTs in
-	 * the system. Returns the List as a JSON array.
+
+	/**
 	 * 
-	 * This will more than likely be removed in the
-	 * future and was only used for proof of concept.
+	 * @return List of all SWOTs in the database with a 200 HTTP status.
 	 * 
-	 *  *COMPLETED BUT FIT FOR REMOVAL*
+	 * GET request for fetching all existing SWOTs in the system. Returns the List
+	 * as a JSON array.
+	 * 
+	 * This will more than likely be removed in the future and was only used for
+	 * proof of concept.
 	 */
-	@GetMapping(path="/view/all", produces= {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(path = "/view/all", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<List<Swot>> viewAllSwot() {
 		List<Swot> swotList = swotService.retrieveAllSwot();
 		return ResponseEntity.ok(swotList);
 	}
 	
-	/*
-	 * POST request to create a new AnalysisItem for a
-	 * particular SWOT. 
+	/**
 	 * 
-	 * Takes in an AnalysisItem from a
-	 * JSON object. 
+	 * @param swotId
+	 * @return ResponseEntity with a 200 HTTP status indicating whether or not deletion was successful
 	 * 
-	 * Returns a 201 HTTP status with an 
-	 * informative client message in the body.
-	 * 
-	 * *COMPLETED*
+	 * DELETE request for deleting a SWOT. Returns ResponseEntity with a message indicating whether
+	 * or not deletion was successful.
 	 */
-	@PostMapping(path="/item/new", consumes= {MediaType.APPLICATION_JSON_VALUE})
+	@DeleteMapping(path = "/delete/{swotId}")
+	public ResponseEntity<ClientMessage> deleteSwot(@PathVariable("swotId") int swotId) {
+		ClientMessage body = swotService.deleteSwot(swotId) ? SUCCESSFULLY_DELETED : DELETION_FAILED;
+		return ResponseEntity.ok(body);
+	}
+
+	/**
+	 * 
+	 * @param analysisItem
+	 * @return ResponseEntity with 201 HTTP status indicating whether or not creation was successful
+	 * 
+	 * POST request to create a new AnalysisItem for a particular SWOT.
+	 * 
+	 * Takes in an AnalysisItem from a JSON object.
+	 * 
+	 * Returns a 201 HTTP status with an informative client message in the body.
+	 */
+	@PostMapping(path = "/item/new", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ClientMessage> createItem(@RequestBody AnalysisItem analysisItem) {
 		ClientMessage body = swotService.createNewItem(analysisItem) ? SUCCESSFULLY_CREATED : CREATION_FAILED;
 		return ResponseEntity.status(HttpStatus.CREATED).body(body);
 	}
-	
-	/*
+
+	/**
+	 * 
+	 * @param analysisItem
+	 * @return ResponseEntity<AnalysisItem> containing the updated analysis item or a 204 status code in event of failure
+	 * 
 	 * PUT request to update an AnalysisItem.
 	 * 
-	 * Takes in an AnalysisItem *with* altered fields
-	 * from a JSON object.
+	 * Takes in an AnalysisItem *with* altered fields from a JSON object.
 	 * 
 	 * If the update failed, returns a 204 status code.
 	 * 
-	 * If successful, returns a 200 status code and the
-	 * updated object.
-	 * 
-	 * *COMPLETED*
+	 * If successful, returns a 200 status code and the updated object.
 	 */
-	@PutMapping(path="/item/update/{analysisItemId}", consumes= {MediaType.APPLICATION_JSON_VALUE})
+	@PutMapping(path = "/item/update/{analysisItemId}", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<AnalysisItem> updateItem(@RequestBody AnalysisItem analysisItem) {
 		AnalysisItem updatedItem = swotService.updateItem(analysisItem);
-		if (updatedItem == null) {	// A null object denotes that the update had failed or done nothing.
-			return ResponseEntity.noContent().build();	// 204 would be the proper response for a PUT that changes nothing.
-		}else{	// Success, return the item.
+		if (updatedItem == null) { // A null object denotes that the update had failed or done nothing.
+			return ResponseEntity.noContent().build(); // 204 would be the proper response for a PUT that changes nothing.
+		} else { // Success, return the item.
 			return ResponseEntity.ok(updatedItem);
 		}
 	}
-	
-	/*
-	 * DELETE request to delete an AnalysisItem from
-	 * a particular SWOT.
+
+	/**
 	 * 
-	 * Takes in the id of the AnalysisItem as a
-	 * variable from the URL.
+	 * @param analysisItemId
+	 * @return ResponseEntity<ClientMessage> indicating whether the delete was successful
 	 * 
-	 * Returns an informative client message and
-	 * a 200 status code.
+	 * DELETE request to delete an AnalysisItem from a particular SWOT.
 	 * 
-	 * *COMPLETED*
+	 * Takes in the id of the AnalysisItem as a variable from the URL.
+	 * 
+	 * Returns an informative client message and a 200 status code.
 	 */
-	@DeleteMapping(path="/item/delete/{analysisItemId}")
+	@DeleteMapping(path = "/item/delete/{analysisItemId}")
 	public ResponseEntity<ClientMessage> deleteSwotItem(@PathVariable("analysisItemId") int analysisItemId) {
 		ClientMessage body = swotService.deleteItem(analysisItemId) ? SUCCESSFULLY_DELETED : DELETION_FAILED;
 		return ResponseEntity.ok(body);

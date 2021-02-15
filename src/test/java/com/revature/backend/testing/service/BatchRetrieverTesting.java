@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.backend.model.api.ApiAssociateAssignment;
 import com.revature.backend.model.api.ApiAssociateTemplate;
@@ -23,7 +21,6 @@ import com.revature.backend.util.BatchRetrieverImpl;
 import com.revature.backend.util.StagingListener;
 
 @SpringBootTest(classes={BatchRetriever.class, BatchRetrieverImpl.class})
-@RunWith(SpringRunner.class)
 public class BatchRetrieverTesting {
 
 	@MockBean

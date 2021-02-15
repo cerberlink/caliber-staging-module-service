@@ -42,3 +42,4 @@ build/
 ### VS Code ###
 .vscode/
 src/main/resources/creds.json
+/src/main/resources/application.properties

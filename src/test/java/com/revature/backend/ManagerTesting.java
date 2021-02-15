@@ -25,7 +25,6 @@ import com.revature.backend.service.ManagerService;
 import com.revature.backend.service.ManagerServiceImpl;
 
 @SpringBootTest(classes = {ManagerService.class, ManagerServiceImpl.class})
-@RunWith(SpringRunner.class)
 public class ManagerTesting {
 	
 	@MockBean
